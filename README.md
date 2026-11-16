@@ -3,6 +3,8 @@
 A MIDI monitor for the Cardputer Zero (320x170 LCD, keyboard only). It lists the MIDI ports with their kind and MIDI version, shows a live decoded event log, and sends test messages.
 Everything goes through the ALSA sequencer: connections stay up and ports that appear later are followed.
 
+![Monitor](screenshots/1-monitor.png) ![Port info](screenshots/2-port-info.png) ![Send test](screenshots/3-send.png)
+
 ## Screens
 
 Tab switches between three views: **Monitor** (port rows and the event log), **Port info** and **Send test**.

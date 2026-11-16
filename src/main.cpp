@@ -437,7 +437,7 @@ struct App {
     void loadDemo() {
         demo = true; umpOk = true; umpNote = "client is UMP MIDI 2.0 (demo)"; auto mk = [&](int c, int p, const char* cn, const char* pn, PKind k, int ver) { Port x; x.client = c; x.port = p; x.cname = cn; x.pname = pn; x.kind = k; x.ver = ver; x.recv = x.send = true;
             x.caps = SND_SEQ_PORT_CAP_READ | SND_SEQ_PORT_CAP_WRITE | SND_SEQ_PORT_CAP_SUBS_READ | SND_SEQ_PORT_CAP_SUBS_WRITE; x.card = k == PKind::USB ? 2 : -1; if (k == PKind::USB) x.cardId = "USB MIDI"; ports.push_back(x); };
-        mk(24, 0, "USB MIDI", "USB MIDI Device 1", PKind::USB, 0); mk(129, 0, "rtpmidid", "Network MIDI Session", PKind::NET, 0);
+        mk(24, 0, "USB MIDI", "USB MIDI Device 1", PKind::USB, 0); mk(129, 0, "Network MIDI", "Network MIDI Session", PKind::NET, 0);
         mk(130, 0, "UMP Test", "UMP Test Group 1", PKind::APP, 2); mk(32, 0, "f_midi", "f_midi MIDI 1", PKind::GDG, 0); mk(14, 0, "Midi Through", "Midi Through Port-0", PKind::VRT, 0);
         outs = ports; sel = 2;
         auto m1 = [&](int pi, uint8_t st, uint8_t a, uint8_t b2) { Decoded d = decodeMidi1(st, a, b2); handle(ports[pi].client, ports[pi].port, d, '1', C_CYN, false); };
