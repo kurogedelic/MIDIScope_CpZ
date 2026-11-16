@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=MIDI Scope
+Comment=MIDI monitor: USB, RTP-MIDI, MIDI 2.0 (UMP)
+Exec=/usr/share/APPLaunch/bin/midi-scope
+Icon=share/images/midi-scope.png
+Terminal=false
+Categories=AudioVideo;Audio;

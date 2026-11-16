@@ -1,0 +1,21 @@
+#!/bin/sh
+# SPDX-License-Identifier: MIT
+# Copyright (c) 2026 Leo Kuroshita (@kurogedelic)
+# Starts midi-scope with the launcher paused. The launcher keeps drawing its status bar (clock, battery) on the LCD, and an app that draws the
+# whole screen would show it on top of its picture. While the app runs the launcher is stopped (SIGSTOP); when the app ends it is continued
+# and the screen it had before is put back. A watchdog continues the launcher even if this script is killed, so it can never stay frozen.
+APP=/usr/share/APPLaunch/bin/midi-scope.bin
+L=$(pgrep -x M5CardputerZero | head -1)
+SNAP=${XDG_RUNTIME_DIR:-/tmp}/midi-scope.fb
+if [ -n "$L" ]; then
+  head -c 108800 /dev/fb0 > "$SNAP" 2>/dev/null
+  kill -STOP "$L" 2>/dev/null
+  setsid sh -c "while kill -0 $$ 2>/dev/null; do sleep 1; done; kill -CONT $L 2>/dev/null" >/dev/null 2>&1 </dev/null &
+fi
+"$APP" "$@"; rc=$?
+if [ -n "$L" ]; then
+  [ -s "$SNAP" ] && cat "$SNAP" > /dev/fb0 2>/dev/null
+  kill -CONT "$L" 2>/dev/null
+  rm -f "$SNAP"
+fi
+exit $rc
